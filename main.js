@@ -16,31 +16,34 @@ async function getWeather(city) {
         document.querySelector(".error").style.display="block";
         document.querySelector(".weather").style.display="none";
     } 
-    let data = await res.json();
-    console.log("Data:", data);
+    else {
+        let data = await res.json();
+        console.log("Data:", data);
+        document.querySelector(".error").style.display = "none";
 
-    document.querySelector(".temp").innerHTML=data.main.temp + "°C";
-    document.querySelector(".city").innerHTML=data.name ;
-    document.querySelector(".humidity").innerHTML=data.main.humidity + "%";
-    document.querySelector(".wind").innerHTML=data.wind.speed+ "km/h";
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
 
-    let icon = document.querySelector(".weather-icon");
-    let weather = data.weather[0].main.toLowerCase();
+        let icon = document.querySelector(".weather-icon");
 
-    if(data.weather[0].main === "Rain"){
-        icon.src="./weather-app-img/images/rain.png"
+        if (data.weather[0].main === "Rain") {
+            icon.src = "./weather-app-img/images/rain.png"
+        }
+        else if (data.weather[0].main === "Clouds") {
+            icon.src = "./weather-app-img/images/clouds.png"
+        }
+        else if (data.weather[0].main === "Clear") {
+            icon.src = "./weather-app-img/images/clear.png"
+        }
+        else if (data.weather[0].main === "Mist") {
+            icon.src = "./weather-app-img/images/mist.png"
+        }
+        else if (data.weather[0].main === "Drizzle") {
+            icon.src = "./weather-app-img/images/drizzle.png"
+        }
+
+        document.querySelector(".weather").style.display = "block";
     }
-    else if(data.weather[0].main === "Clouds"){
-        icon.src="./weather-app-img/images/clouds.png"
-    }
-    else if(data.weather[0].main === "Clear"){
-        icon.src="./weather-app-img/images/clear.png"
-    }
-    else if(data.weather[0].main === "Mist"){
-        icon.src="./weather-app-img/images/mist.png"
-    }
-    else if(data.weather[0].main === "Drizzle"){
-        icon.src="./weather-app-img/images/drizzle.png"
-    }
-    document.querySelector(".weather").style.display="block"
 }
